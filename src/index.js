@@ -24,8 +24,8 @@ const bot = mineflayer.createBot({
   version: "1.15.2"
 })
 
-bot.on('chat', (username, message) => {
-    console.log(`${username}:  ${message}`)
+bot.on('message', (msg) => {
+    console.log(`${msg}`)
 })
 
 bot.once('spawn', () => {
@@ -33,7 +33,7 @@ bot.once('spawn', () => {
         set_chunk(data)
     });    // keep your eyes on the target, so creepy!
     bot.creative.startFlying()
-    bot.chat("A map download plan is underway, tools and results are publicly available and anyone interested can participate. We are in early stage but things are moving fast. This is an automatic message https://github.com/asyade/cort2bot-minetexas-dump ");
+    //bot.chat("A map download plan is underway, tools and results are publicly available and anyone interested can participate. We are in early stage but things are moving fast. This is an automatic message https://github.com/asyade/cort2bot-minetexas-dump");
     routine()
 })
 
@@ -52,26 +52,52 @@ async function move_to(position) {
     })
 }
 
+function resume() {
+    try {
+        const json = JSON.parse(fs.readFileSync("/tmp/stash.json", "UTF8"));
+        if (json !== null && json.left !== null && json.new_z != null) {
+            return json
+        } else {
+            return null
+        }
+    } catch (e) {
+        return null
+    }
+}
+
 async function routine() {
     console.log("Set Y pos ...")
     await move_to(v(bot.entity.position, WALK_HEIGHT, bot.entity.position));
+    var resumed_state;
+    if ((resumed_state = resume()) !== null) {
+        console.log("Resuming previous fill (remove /tmp/stash.json to reset)");
+        return await fill(resumed_state)
+    }
     console.log("Set X,Z pos ...");
     await move_to(v(config.zone.position[0] * CSIZE, WALK_HEIGHT, config.zone.position[1] * CSIZE));
     console.log("Placement done !");
-    await fill()
+    await fill({
+        left: true,
+        new_z: config.zone.position[1]
+    });
 }
 
-async function fill() {
-    var points = [];
-    var left = true;
-    var new_z = config.zone.position[1]
-    while (true) {
-        var new_x = left ? config.zone.position[0] + config.zone.size[0] : config.zone.position[0];
-        new_z += 12;
-        top = !left;
-        await move_to(v(new_x * CSIZE, WALK_HEIGHT, new_z * CSIZE))
+async function fill(state) {
+    while (state.new_z < config.zone.position[0] + config.zone.size[1]) {
+        var new_x = state.left ? config.zone.position[0] + config.zone.size[0] : config.zone.position[0];
+        state.new_z += 6;
+        state.left = !state.left;
+        fs.writeFileSync("/tmp/stash.json", JSON.stringify(state), "UTF8");
+        await move_to(v(new_x * CSIZE, WALK_HEIGHT, state.new_z * CSIZE))
     }
+    fs.unlinkSync("/tmp/stash.json");
+    console.log("DUMP DONE !");
 }
 
 bot.on('chunkColumnLoad', (e) => {
 })
+
+process.on('exit', (code) => {
+    console.log(`About to exit with code: ${code}`);
+  });
+  
