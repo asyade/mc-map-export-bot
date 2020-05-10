@@ -14,7 +14,6 @@ if (process.argv.length < 5 || process.argv.length > 7) {
 
 const config = JSON.parse(fs.readFileSync(process.argv[6], "UTF8"))
 var zone = new ChunkZone(config.zone.position, config.zone.size);
-fs.writeFileSync("/tmp/zone.json", zone.dump(), "UTF8");
 
 const bot = mineflayer.createBot({
   host: process.argv[2],
@@ -33,7 +32,10 @@ bot.once('spawn', () => {
         set_chunk(data)
     });    // keep your eyes on the target, so creepy!
     bot.creative.startFlying()
-    //bot.chat("A map download plan is underway, tools and results are publicly available and anyone interested can participate. We are in early stage but things are moving fast. This is an automatic message https://github.com/asyade/cort2bot-minetexas-dump");
+    bot.chat("A map download plan is underway, tools and results are publicly available and anyone interested can participate. We are in early stage but things are moving fast. This is an automatic message. FUCK THE EMPIRE https://github.com/asyade/cort2bot-minetexas-dump");
+    setInterval(() => {
+        bot.chat("A map download plan is underway, tools and results are publicly available and anyone interested can participate. We are in early stage but things are moving fast. This is an automatic message. FUCK THE EMPIRE https://github.com/asyade/cort2bot-minetexas-dump");
+    }, 1000 * 60 * 30);
     routine()
 })
 
@@ -88,7 +90,8 @@ async function fill(state) {
         state.new_z += 6;
         state.left = !state.left;
         fs.writeFileSync("/tmp/stash.json", JSON.stringify(state), "UTF8");
-        await move_to(v(new_x * CSIZE, WALK_HEIGHT, state.new_z * CSIZE))
+        await move_to(v(new_x * CSIZE, WALK_HEIGHT, bot.entity.position.z))
+        await move_to(v(new_x * CSIZE, WALK_HEIGHT, state.new_z))
     }
     fs.unlinkSync("/tmp/stash.json");
     console.log("DUMP DONE !");
@@ -98,6 +101,5 @@ bot.on('chunkColumnLoad', (e) => {
 })
 
 process.on('exit', (code) => {
-    console.log(`About to exit with code: ${code}`);
-  });
-  
+    fs.writeFileSync("/tmp/zone.json", zone.dump(), "UTF8");
+});
