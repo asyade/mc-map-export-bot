@@ -24,15 +24,17 @@ const bot = mineflayer.createBot({
 })
 
 bot.on('message', (msg) => {
-    console.log(`${msg}`)
+    // console.log(`${msg}`)
 })
 
 bot.once('spawn', () => {
     bot._client.on('map_chunk', (data) => {
+        if (!data.bitMap) {
+            return;
+        }
         set_chunk(data)
     });    // keep your eyes on the target, so creepy!
     bot.creative.startFlying()
-    bot.chat("A map download plan is underway, tools and results are publicly available and anyone interested can participate. We are in early stage but things are moving fast. This is an automatic message. FUCK THE EMPIRE https://github.com/asyade/cort2bot-minetexas-dump");
     setInterval(() => {
         bot.chat("A map download plan is underway, tools and results are publicly available and anyone interested can participate. We are in early stage but things are moving fast. This is an automatic message. FUCK THE EMPIRE https://github.com/asyade/cort2bot-minetexas-dump");
     }, 1000 * 60 * 30);
