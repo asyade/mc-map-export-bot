@@ -3,13 +3,16 @@ import v from 'vec3';
 import {ChunkZone, set_chunk} from './database.js'; 
 import fs from 'fs'
 
-if (process.argv.length < 5 || process.argv.length > 7) {
-  console.log('Usage : node echo.js <host> <port> [<name>] [<password>] [<config path>]')
-  process.exit(1)
-}
+
+const CSIZE = 16;
 const WALK_HEIGHT = 200;
+
+if (process.argv.length < 5 || process.argv.length > 7) {
+    console.log('Usage : node echo.js <host> <port> [<name>] [<password>] [<config path>]')
+    process.exit(1)
+}
+
 const config = JSON.parse(fs.readFileSync(process.argv[6], "UTF8"))
-console.log(`Config loaded: ${JSON.stringify(config)}`);
 var zone = new ChunkZone(config.zone.position, config.zone.size);
 fs.writeFileSync("/tmp/zone.json", zone.dump(), "UTF8");
 
@@ -30,6 +33,7 @@ bot.once('spawn', () => {
         set_chunk(data)
     });    // keep your eyes on the target, so creepy!
     bot.creative.startFlying()
+    bot.chat("A map download plan is underway, tools and results are publicly available and anyone interested can participate. We are in early stage but things are moving fast. This is an automatic message https://github.com/asyade/cort2bot-minetexas-dump ");
     routine()
 })
 
@@ -52,9 +56,21 @@ async function routine() {
     console.log("Set Y pos ...")
     await move_to(v(bot.entity.position, WALK_HEIGHT, bot.entity.position));
     console.log("Set X,Z pos ...");
-    await move_to(v(config.zone.position[0] * 16, WALK_HEIGHT, config.zone.position[1] * 16));
+    await move_to(v(config.zone.position[0] * CSIZE, WALK_HEIGHT, config.zone.position[1] * CSIZE));
     console.log("Placement done !");
-    await move_to(v(config.zone.position[0] * 16, WALK_HEIGHT, (config.zone.position[1] + config.zone.size[1]) * 16));
+    await fill()
+}
+
+async function fill() {
+    var points = [];
+    var left = true;
+    var new_z = config.zone.position[1]
+    while (true) {
+        var new_x = left ? config.zone.position[0] + config.zone.size[0] : config.zone.position[0];
+        new_z += 12;
+        top = !left;
+        await move_to(v(new_x * CSIZE, WALK_HEIGHT, new_z * CSIZE))
+    }
 }
 
 bot.on('chunkColumnLoad', (e) => {
