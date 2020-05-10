@@ -33,3 +33,8 @@ The configuration format is pretty simple we're just defining a zone and the bot
     }
 }
 ```
+
+# Deployment
+## AWS
+## HEROKU
+> COMMING SOON
