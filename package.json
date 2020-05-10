@@ -1,0 +1,15 @@
+{
+  "name": "cort2bot",
+  "version": "1.42.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mineflayer": "git+https://github.com/asyade/mineflayer.git#master",
+    "vec3": "^0.1.3"
+  }
+}
