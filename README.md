@@ -1,4 +1,4 @@
-Cort2Bot is a MINECRAFT server world dumper specially made for anarchy server.
+Cort2Bot is a MINECRAFT bot that dump the game world.
 
 # Operation
 The bot emulate the minecraft client and move around a predefined zone, saving all chunks on the road.
