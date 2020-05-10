@@ -36,7 +36,7 @@ The configuration format is pretty simple we're just defining a zone and the bot
 
 # Dump format
 The chunk are raw stored in `$HOME/.mcdump`
-> *WIP* Checkout our version of mcchunkloader that accept json chunk format https://github.com/asyade/mcchunkloader.git
+> *WIP* To convert raw chunk into usable minecraft map use https://github.com/asyade/dump-map
 
 # Deployment
 ## AWS
