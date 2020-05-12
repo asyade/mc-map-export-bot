@@ -1,7 +1,7 @@
 node_modules
 node_modules/**
+client/node_modules
+client/node_modules/**
 .vscode
-examples
-examples/**
-dist
-dist/**
+client/dist
+client/dist/**
