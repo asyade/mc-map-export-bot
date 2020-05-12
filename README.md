@@ -24,7 +24,6 @@ babel-node src/index.js
 
 ## Config
 The configuration format is pretty simple we're just defining a zone and the bot will do the rest.
-> Coordonates are exprimated in chunk, divid normale coordonate by 16 
 ```json
 {
     "zone": {
@@ -35,8 +34,8 @@ The configuration format is pretty simple we're just defining a zone and the bot
 ```
 
 # Dump format
-The chunk are raw stored in `$HOME/.mcdump`
-> *WIP* To convert raw chunk into usable minecraft map use https://github.com/asyade/dump-map
+The chunk are stored in `$HOME/.mcdump` (as json representation of chunk session packet)
+Theses chunks can be converted to a playable minecraft world using https://github.com/asyade/dump-map
 
 # Deployment
 ## AWS
