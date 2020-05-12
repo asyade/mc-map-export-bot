@@ -4,8 +4,6 @@ const Vec3 = require('vec3').Vec3
 module.exports = inject
 
 function inject (bot, { version }) {
-  const Item = require('prismarine-item')(version)
-
   // these features only work when you are in fly mode.
   bot.fly = {
     flyTo,
@@ -47,6 +45,7 @@ function inject (bot, { version }) {
   function stopFlying () {
     bot.physics.gravity = normalGravity
   }
+  
 }
 
 // this should be in the vector library
