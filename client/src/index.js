@@ -1,5 +1,5 @@
 import mineflayer from 'mineflayer';
-import { setChunk } from './plugins/dump.js/index.js.js'; 
+import { setChunk } from './database.js'; 
 import Fly from './plugins/fly.js'
 import Fill from './plugins/fill.js'
 import Dump from './plugins/dump.js'
@@ -35,9 +35,9 @@ const BOT = mineflayer.createBot({
   password: process.argv[5],
   version: "1.15.2"
 })
-BOT.once('spawn', () => {
-    BOT.dump.on("chunk", async (chunk) => {
-        set_chunk(chunk)
+BOT.once('spawn', async () => {
+    BOT.dump.on("chunk", (chunk) => {
+        setChunk(chunk)
     })
     BOT.fly.startFlying()
     await BOT.fill.fill_zone(CONFIG)

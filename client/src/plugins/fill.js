@@ -1,4 +1,6 @@
 import fs from 'fs'
+import v from 'vec3'
+
 const CHUNK_SIZE = 16;
 
 module.exports = inject
@@ -6,7 +8,7 @@ module.exports = inject
     function inject (bot, { version }) {
         var config = null;
 
-        bot.fill.fill_zone = fill_zone
+        bot.fill = { fill_zone:  fill_zone }
         
         function resume() {
             try {

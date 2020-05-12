@@ -36,7 +36,6 @@ function inject (bot, { version }) {
         })
         bot._client.on('map_chunk', (data) => {
             if (!data.bitMap) return;
-            console.log(`dump ${data.x} ${data.z}`)
             bot.dump.emit("chunk", data)
         });
     })

@@ -15,4 +15,4 @@ function setChunk(data) {
     fs.writeFile(chunk_fname(data.x, data.z), JSON.stringify(data), "utf8", () => {});
 }
 
-export { ChunkZone, SESSION_DIR, chunk_fname, setChunk }
+export { SESSION_DIR, chunk_fname, setChunk }
