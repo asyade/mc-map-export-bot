@@ -1,0 +1,3 @@
+[submodule "dump-map"]
+	path = dump-map
+	url = https://github.com/asyade/dump-map
