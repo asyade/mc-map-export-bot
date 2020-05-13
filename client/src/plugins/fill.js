@@ -43,8 +43,8 @@ module.exports = inject
                 state.new_z += 10;
                 state.left = !state.left;
                 fs.writeFileSync("/tmp/stash.json", JSON.stringify(state), "UTF8");
-                await move_to(v(new_x * CSIZE, config.zone.position[1], bot.entity.position.z))
-                await move_to(v(bot.entity.position.x, config.zone.position[1], state.new_z * CSIZE))
+                await move_to(v(new_x * CHUNK_SIZE, config.zone.position[1], bot.entity.position.z))
+                await move_to(v(bot.entity.position.x, config.zone.position[1], state.new_z * CHUNK_SIZE))
             }
             fs.unlinkSync("/tmp/stash.json");
             console.log("DUMP DONE !");
