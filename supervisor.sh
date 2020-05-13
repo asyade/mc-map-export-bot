@@ -21,9 +21,11 @@ fi
 $DUMP_MAP -o $REGION listen&
 DUMP_MAP_PID=$!
 
+echo XFROM $XFROM
+
 cd client
 while [ 1 ]; do
-    npm run dev "$SERVER" "$PORT" "$USERNAME" "$PASSWORD" "$XFROM" "$YFROM" "$ZFROM" "$XSIZE" "$ZSIZE" || continue
+    npm run dev -- $SERVER $PORT $USERNAME $PASSWORD $XFROM $YFROM $ZFROM $XSIZE $ZSIZE || continue
     break
 done
 cd ..

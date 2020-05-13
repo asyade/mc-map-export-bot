@@ -25,6 +25,8 @@ const CONFIG = {
         ]
     }
 }
+console.log(process.argv);
+
 const BOT = mineflayer.createBot({
   plugins: {
     Fly,
