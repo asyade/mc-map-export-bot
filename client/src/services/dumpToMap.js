@@ -36,7 +36,6 @@ function sendPacket(obj) {
     }
 }
  
-client.connect('ws://localhost:4242/');
-
+client.connect(`ws://localhost:${process.env.PPORT ? process.env.PPORT : 4242}/`);
 
 export default sendPacket
