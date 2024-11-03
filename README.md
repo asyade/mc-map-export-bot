@@ -1,10 +1,6 @@
-# Cort2Bot
+# mc-map-export-bot
 
-A Minecraft bot designed to capture and export game world data.
-
-## Overview
-
-Cort2Bot emulates a Minecraft client to systematically traverse a predefined area, capturing and saving all encountered chunks. These chunks are then integrated into an existing Minecraft world save file.
+`mc-map-export-bot` emulates a Minecraft client to systematically traverse a predefined area, capturing and saving all encountered chunks. These chunks are then integrated into an existing Minecraft world save file.
 
 > **Note**: The target server must allow flying capabilities, which is common in anarchy servers.
 
